@@ -1,0 +1,30 @@
+{
+    "interface" : {
+        "getPkoin" : "Get PKOIN",
+        "limit" : "Limit",
+        "you_email" : "Your email (optional)",
+        "pkoin_wallet" : "Your PKOIN wallet address",
+        "you_send" : "You send",
+        "you_get" : "You get",
+        "enter_a_number" : "Enter a number",
+        "unable_to_submit" : "Unable to submit: Either some of fields are empty or have invalid values",
+        "no_such_wallet" : "Such PKOIN wallet address doesn`t exist",
+        "exceed_limit" : "Purchased amount of PKOINs exceeds the limit",
+        "purchase_fail" : "Failed to purchase PKOIN. Please try later.",
+        "purchase_address" : "Please send your",
+        "to_this_address" : "to this address",
+        "valid_timer" : "Address will be valid for the next",
+        "minutes" : "minutes",
+        "qr_text" : "Scan this QR-code to autofill address field in your",
+        "wallet_app" : "wallet app:",
+        "updating_status" : "Updating transaction status...",
+        "transaction_status" : "Transaction status:",
+        "awaiting_funds" : "AWAITING FUNDS",
+        "expired" : "EXPIRED",
+        "completed" : "COMPLETED",
+        "pending" : "PENDING",
+        "address_copied" : "Wallet address successfully copied to clipboard",
+        "status_updated" : "Transaction status updated",
+        "status_update_fail" : "Failed to update transaction status"
+    }
+}
