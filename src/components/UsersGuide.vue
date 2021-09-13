@@ -1,19 +1,19 @@
 <template>
-    <div class="guide">
+    <div class="guide mt-3">
         <section>
-            <h4>Common information</h4>
-            <p>You can copy wallet address by clicking on it.</p>
-            <p>Amount of PKOIN you see in the 'You get' field is an approximation. Final amount will be calculated when your funds are received, depending on the current exhange rate.</p>
+            <h5 class="mb-3 font-weight-bold">Common information</h5>
+            <p class="m-0">- You can copy wallet address by clicking on it.</p>
+            <p class="m-0">- Amount of PKOIN you see in the 'You get' field is an approximation. Final amount will be calculated when your funds are received, depending on the current exhange rate.</p>
         </section>
 
-        <section>
-            <h4>Possible transaction statuses:</h4>
-            <p><span class="await bold">AWAITING FUNDS</span> - we are waiting for your transaction to come.</p>
-            <p><span class="expired bold">EXPIRED</span> - transaction timer has expired. The payment address is no longer valid.</p>
-            <p><span class="completed bold">COMPLETED</span> - your funds were received. PKOINS are already on their way to your wallet.</p>
-            <p><span class="pending bold">PENDING</span> - something has happened and your transaction must be completed manually. Please contact support.</p>
-            <p><span class="сonfirm bold">AWAITING CONFIRMATIONS</span> - your transaction has appeared in a blockchain. We are waiting fot it to get confirmed.</p>
-            <p><span class="сonfirm bold">1-3 CONFIRMATIONS</span> - a number of your transaction confirmations in the blockchain.</p>
+        <section class="mb-3 mt-5">
+            <h5 class="mb-3 font-weight-bold">Possible transaction statuses</h5>
+            <p class="mt-0 mb-2"><strong class="await">AWAITING FUNDS</strong> - we are waiting for your transaction to come.</p>
+            <p class="mt-0 mb-2"><strong class="expired">EXPIRED</strong> - transaction timer has expired. The payment address is no longer valid.</p>
+            <p class="mt-0 mb-2"><strong class="completed">COMPLETED</strong> - your funds were received. PKOINS are already on their way to your wallet.</p>
+            <p class="mt-0 mb-2"><strong class="pending">PENDING</strong> - something has happened and your transaction must be completed manually. Please contact support.</p>
+            <p class="mt-0 mb-2"><strong class="сonfirm">AWAITING CONFIRMATIONS</strong> - your transaction has appeared in a blockchain. We are waiting fot it to get confirmed.</p>
+            <p class="mt-0 mb-2"><strong class="сonfirm">1-3 CONFIRMATIONS</strong> - a number of your transaction confirmations in the blockchain.</p>
         </section>
     </div>
 </template>
@@ -25,8 +25,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-section
-    line-height: .5em
 .await
     color: $main-blue
 
@@ -41,7 +39,4 @@ section
 
 .сonfirm
     color: blue
-
-.bold
-    font-weight: bold
 </style>

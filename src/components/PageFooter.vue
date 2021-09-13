@@ -7,9 +7,9 @@
         <span v-if="setButtonVisibility" @click="displayDeletionModal" :class="`footer_link ${changeColor}`">Clear transaction history</span>
         <span v-else @click="navigateToHistory" :class="`footer_link ${changeColor}`">Purchase history</span>
 
-        <Dialog header="Header" :visible.sync="display" >
+        <Dialog :visible.sync="display" >
             <template #header>
-                <h3>Support Ticket</h3>
+                <h3 class="m-0">Support Ticket</h3>
             </template>
 
             <SupportModal @closeModal="displayModal" />
@@ -25,24 +25,13 @@
             </div>
         </Dialog>
 
-        <Dialog header="User's guide:" :visible.sync="display_purchase_guide" >
-        <section>
-            <h4>Common information</h4>
-            <p>- You can copy wallet address by clicking on it.</p>
-            <p>- Amount of PKOIN you see in the 'You get' field is an approximation. Final amount will be calculated when your funds are received, depending on the current exhange rate.</p>
-            <br>
-            <br>
-
-            <h4>Possible transaction statuses:</h4>
-            <p><span class="await bold">AWAITING FUNDS</span> - we are waiting for your transaction to come.</p>
-            <p><span class="expired bold">EXPIRED</span> - transaction timer has expired. The payment address is no longer valid.</p>
-            <p><span class="completed bold">COMPLETED</span> - your funds were received. PKOINS are already on their way to your wallet.</p>
-            <p><span class="pending bold">PENDING</span> - something has happened and your transaction must be completed manually. Please contact support.</p>
-            <p><span class="сonfirm bold">AWAITING CONFIRMATIONS</span> - your transaction has appeared in a blockchain. We are waiting fot it to get confirmed.</p>
-            <p><span class="сonfirm bold">1-3 CONFIRMATIONS</span> - a number of your transaction confirmations in the blockchain.</p>
-        </section>
-            <!-- <UsersGuide /> -->
+        <Dialog :visible.sync="display_purchase_guide" >
+            <template #header>
+                <span class="mx-auto p-dialog-title">User's guide</span>
+            </template>
+            <UsersGuide />
         </Dialog>
+
     </div>
 </template>
 
@@ -156,36 +145,14 @@ s
     background: white
     color: gray
 
-::v-deep .p-dialog .p-dialog-header h3
-    margin: 0
-
 ::v-deep .p-dialog .p-dialog-content
     padding-bottom: $r * 2
 
-.await
-    color: $main-blue
-
-.expired
-    color: red
-
-.completed
-    color: green
-    
-.pending
-    color: orange
-
-.сonfirm
-    color: blue
-
 .bold
     font-weight: bold
-
-section
-    line-height: .5
 
 @media screen and (max-width: 768px)
     .footer
         display: flex
         flex-wrap: wrap
-        line-height: 3
 </style>

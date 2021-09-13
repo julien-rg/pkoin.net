@@ -291,7 +291,7 @@ export default {
                     return
                 }
                 
-                if(this.get_purschase_error_status.includes('is not available')) {
+                if(this.get_purschase_error_status && this.get_purschase_error_status.includes('is not available')) {
                     this.$toast.add({severity:'error', summary: 'You can`t use this currency at this moment :( Try another one', detail:'', life: 3500})
                     this.transaction_in_process = false
                     return

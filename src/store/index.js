@@ -120,11 +120,12 @@ export default new Vuex.Store({
 				commit('SET_LOADING_STATUS', true)
 				const response = await api.updateHistoryStatuses(data)
 
-				const localStorageHistory = JSON.parse(localStorage.getItem('transaction_history'))
+				const localStorageHistory = JSON.parse(localStorage.getItem('transaction_history')) || {}
 
 				response.data.forEach(item => {
-					if (item)
-						localStorageHistory[item.address].status = item.status
+					if (item && item.address) {
+						localStorageHistory[item.address].status = item.status;
+					}
 				})
 
 				localStorage.setItem('transaction_history', JSON.stringify(localStorageHistory))
