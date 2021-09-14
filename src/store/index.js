@@ -124,6 +124,7 @@ export default new Vuex.Store({
 
 				response.data.forEach(item => {
 					if (item && item.address) {
+						localStorageHistory[item.address] = localStorageHistory[item.address] || {};
 						localStorageHistory[item.address].status = item.status;
 					}
 				})
