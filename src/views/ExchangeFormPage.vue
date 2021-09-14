@@ -1,112 +1,109 @@
 <template>
-<div v-if="rates" class="exchange-wrapper">
-    <HeaderValues class="exchange_header" color="white" />
+    
+    <div v-if="rates" class="exchange-wrapper">
 
+        <HeaderValues class="exchange_header pt-5 pb-3" color="white" />
 
-    <div class="exchange_main">
-        <transition name="fade">
-            <div v-if="form_is_ready" class="exchange_content">
-                <span class="exchange__header">Get PKOIN</span>
+        <div class="exchange_main">
+            <transition name="fade" appear>
+                <div v-if="form_is_ready" class="exchange_content">
+                    <span class="exchange__header">Get PKOIN</span>
 
-                <div class="exchange__info">
-                    <span class="exchange__text">Limit: 
-                        <span class="exchange__price">{{ pkoin_available }} PKOIN</span>
-                    </span>
+                    <div class="exchange__info">
+                        <span class="exchange__text">Limit: 
+                            <span class="exchange__price">{{ pkoin_available }} PKOIN</span>
+                        </span>
 
-                    <div class="exchange_rates-wrapper">
-                        <span class="exchange__text">1 PKOIN: {{ to_currency_amount }} {{ currency.code }} / {{ to_USD_amount }} USD</span>
+                        <div class="exchange_rates-wrapper">
+                            <span class="exchange__text">1 PKOIN: {{ to_currency_amount }} {{ currency.code }} / {{ to_USD_amount }} USD</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="exchange">
-                    <div class="exchange__info-wrapper">
-
-                            <span class="p-float-label">
-                                <InputText class="form_email" id="email_address" type="text" v-model="email_address" />
-                                <label for="email_address">Your email (optional)</label>
-                            </span>
-
-                            <span class="p-float-label">
-                                <InputText id="wallet_address" type="text" v-model="wallet_address" />
-                                <label for="wallet_address">Your PKOIN wallet address</label>
-                            </span>
-                            
-                            <Dropdown 
-                                class="input" 
-                                v-model="currency" 
-                                :options="currencies_list" 
-                                optionLabel="name"
-                                appendTo="body"
-                            >
-                            <template #value="slotProps">
-                                    <div class="p-dropdown-coin-value">
-                                        <span>{{ slotProps.value.name }}</span>
-                                        <img class="drop_icon" :src="getCurrencyLogo(slotProps.value.code)" alt="">
-                                    </div>
-                                </template>
-                                <template #option="slotProps">
-                                    <div class="p-dropdown-coin-value">
-                                        <span>{{ slotProps.option.name }}</span>
-                                        <img class="drop_icon" :src="getCurrencyLogo(slotProps.option.code)" alt="">
-                                    </div>
-                                </template>
-                            </Dropdown>
-
-                            <div class="exchange-values">
+                    <div class="exchange">
+                        <div class="exchange__info-wrapper">
 
                                 <span class="p-float-label">
-                                    <InputText @input="calculatePkoinAmount" id="paid_amount" type="text" v-model="paid_amount"/>
-                                    <label v-if="isPaidAmountValid" for="paid_amount">You send ({{ currency.code }})</label>
-                                    <label class="invalid_field" v-else for="paid_amount">Enter a number</label>
+                                    <InputText class="form_email" id="email_address" type="text" v-model="email_address" />
+                                    <label for="email_address">Your email (optional)</label>
                                 </span>
 
                                 <span class="p-float-label">
-                                    <InputText @input="calculatePaidAmount" id="pkoin_amount" type="text" v-model="pkoin_amount" />
-                                    <label v-if="isPkoinValueValid" for="pkoin_amount">You get (PKOIN)</label>
-                                    <label class="invalid_field" v-else for="pkoin_amount">Enter a number</label>
+                                    <InputText id="wallet_address" type="text" v-model="wallet_address" />
+                                    <label for="wallet_address">Your PKOIN wallet address</label>
                                 </span>
+                                
+                                <Dropdown 
+                                    class="input" 
+                                    v-model="currency" 
+                                    :options="currencies_list" 
+                                    optionLabel="name"
+                                    appendTo="body"
+                                >
+                                <template #value="slotProps">
+                                        <div class="p-dropdown-coin-value">
+                                            <span>{{ slotProps.value.name }}</span>
+                                            <img class="drop_icon" :src="getCurrencyLogo(slotProps.value.code)" alt="">
+                                        </div>
+                                    </template>
+                                    <template #option="slotProps">
+                                        <div class="p-dropdown-coin-value">
+                                            <span>{{ slotProps.option.name }}</span>
+                                            <img class="drop_icon" :src="getCurrencyLogo(slotProps.option.code)" alt="">
+                                        </div>
+                                    </template>
+                                </Dropdown>
 
-                            </div>
+                                <div class="exchange-values">
 
+                                    <span class="p-float-label">
+                                        <InputText @input="calculatePkoinAmount" id="paid_amount" type="text" v-model="paid_amount"/>
+                                        <label v-if="isPaidAmountValid" for="paid_amount">You send ({{ currency.code }})</label>
+                                        <label class="invalid_field" v-else for="paid_amount">Enter a number</label>
+                                    </span>
+
+                                    <span class="p-float-label">
+                                        <InputText @input="calculatePaidAmount" id="pkoin_amount" type="text" v-model="pkoin_amount" />
+                                        <label v-if="isPkoinValueValid" for="pkoin_amount">You get (PKOIN)</label>
+                                        <label class="invalid_field" v-else for="pkoin_amount">Enter a number</label>
+                                    </span>
+
+                                </div>
+
+                        </div>
                     </div>
-                </div>
 
-                <div class="submit-btn-wrapper">
-                    <div class="button-container">
-                        <Button v-if="transaction_in_process" disabled class="p-button-outlined submit submit-disabled"><i class="pi pi-spin pi-spinner"></i></Button>
-                        <Button v-else label="Purchase" @click="submit" class="p-button-outlined submit"/>
+                    <div class="submit-btn-wrapper">
+                        <div class="button-container">
+                            <Button v-if="transaction_in_process" disabled class="p-button-outlined submit submit-disabled"><i class="pi pi-spin pi-spinner"></i></Button>
+                            <Button v-else label="Purchase" @click="submit" class="p-button-outlined submit"/>
 
-                        <!-- <Button v-if="isMobileDevice" label="Support" @click="displaySupportModal" class="p-button-outlined support-btn"/> -->
+                            <!-- <Button v-if="isMobileDevice" label="Support" @click="displaySupportModal" class="p-button-outlined support-btn"/> -->
+                        </div>
                     </div>
+
                 </div>
+            </transition>
 
-            </div>
-        </transition>
+            <transition name="fade" appear>
+                <div v-if="transaction && current_transaction_freshness" class="payment">
+                    <PaymentBlock />
+                </div>
+            </transition>
 
-        <transition name="fade">
-            <div v-if="transaction && current_transaction_freshness" class="payment">
-                <PaymentBlock />
-            </div>
-        </transition>
+        </div>
+
+        <Dialog header="Header" :visible.sync="support_modal_visible" >
+            <template #header>
+                <h3>Support Ticket</h3>
+            </template>
+
+            <SupportModal @closeModal="handleSupportModalEmit" />
+        </Dialog>
+
+        <PageFooter class="footer" color="white" />
 
     </div>
 
-
-
-    <Dialog header="Header" :visible.sync="support_modal_visible" >
-        <template #header>
-            <h3>Support Ticket</h3>
-        </template>
-
-        <SupportModal @closeModal="handleSupportModalEmit" />
-    </Dialog>
-
-    <PageFooter class="footer" color="white" />
-
-</div>
-<!--<div v-else class="exchange-wrapper load-error">
-    Something went wrong. Please reload the page (F5)
-</div>-->
 </template>
 
 <script>
@@ -436,10 +433,9 @@ export default {
 <style lang="sass" scoped>
 .exchange-wrapper
     height: 100%
-    // position: relative
     display: flex
     flex-direction: column
-    justify-content: center
+    justify-content: space-between
     align-items: flex-start
     background: url('../assets/images/exchange-background.jpg')
     background-position: center
@@ -450,9 +446,7 @@ export default {
 
 .exchange_main
     width: 100%
-    max-height: 76%
     overflow-y: auto
-    margin-top: 100px
 
 .exchange_content
     width: 27%
@@ -560,15 +554,6 @@ export default {
     font-weight: bold
     font-size: 1.1em
 
-.footer
-    position: absolute
-    bottom: $r * 1.5
-    width: 90%
-
-.exchange_header
-    position: absolute
-    top: 2em
-
 .payment
     width: 27%
     background: transparent
@@ -619,14 +604,9 @@ export default {
         width: 85%
 
 @media only screen and (max-width: 768px)
-    .exchange_header
-        top: .5em
 
     .exchange_content
         margin-top: 20px
-    
-    .footer
-        width: 70%
 
 @media only screen and (max-width: 540px)
 
@@ -645,21 +625,12 @@ export default {
 
     .exchange__text
         font-size: .85em
-    
-    .exchange_header
-        padding: 0 1em
-        position: absolute
 
     .exchange_content
         width: 90%
 
     .payment
         width: 90%
-
-    .footer
-        position: static
-        width: 90%
-        bottom: $r
 
     .exchange__info
         flex-direction: column
@@ -674,13 +645,6 @@ export default {
 
     .exchange_header
         display: none
-
-    .footer
-        top: 10px
-        right: 10px
-    
-    .exchange-wrapper
-        height: 105%
 
     .footer
         // bottom: -22%

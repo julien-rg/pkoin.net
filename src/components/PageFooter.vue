@@ -1,38 +1,40 @@
 <template>
-    <div class="footer">
+    <transition name="fade" appear>
+        <div class="footer py-2">
 
-        <span @click="displayModal" :class="`footer_link ${changeColor}`">Contact Support</span>
-        <span @click="displayPutchaseGuide" :class="`footer_link ${changeColor}`">User's guide</span>
-        <span v-if="setButtonVisibility" @click="navigateToPaymentForm" :class="`footer_link ${changeColor}`">Back to payment form</span>
-        <span v-if="setButtonVisibility" @click="displayDeletionModal" :class="`footer_link ${changeColor}`">Clear transaction history</span>
-        <span v-else @click="navigateToHistory" :class="`footer_link ${changeColor}`">Purchase history</span>
+            <span @click="displayModal" :class="`footer_link ${changeColor}`">Contact Support</span>
+            <span @click="displayPutchaseGuide" :class="`footer_link ${changeColor}`">User's guide</span>
+            <span v-if="setButtonVisibility" @click="navigateToPaymentForm" :class="`footer_link ${changeColor}`">Back to payment form</span>
+            <span v-if="setButtonVisibility" @click="displayDeletionModal" :class="`footer_link ${changeColor}`">Clear transaction history</span>
+            <span v-else @click="navigateToHistory" :class="`footer_link ${changeColor}`">Purchase history</span>
 
-        <Dialog :visible.sync="display" >
-            <template #header>
-                <h3 class="m-0">Support Ticket</h3>
-            </template>
+            <Dialog :visible.sync="display" >
+                <template #header>
+                    <h3 class="m-0">Support Ticket</h3>
+                </template>
 
-            <SupportModal @closeModal="displayModal" />
+                <SupportModal @closeModal="displayModal" />
 
-        </Dialog>
+            </Dialog>
 
-        <Dialog header="Clear history" :visible.sync="display_delete_confirmation" >
-            <span>Are you sure you want to clear the transaction history? This action cannot be undone.</span>
+            <Dialog header="Clear history" :visible.sync="display_delete_confirmation" >
+                <span>Are you sure you want to clear the transaction history? This action cannot be undone.</span>
 
-            <div class="delete-btns">
-                <Button @click.native="clearTransactionHistory" label="Yes" class="p-button-outlined yes" />
-                <Button @click="displayDeletionModal" label="No" class="p-button-outlined p-button-danger" />
-            </div>
-        </Dialog>
+                <div class="delete-btns">
+                    <Button @click.native="clearTransactionHistory" label="Yes" class="p-button-outlined yes" />
+                    <Button @click="displayDeletionModal" label="No" class="p-button-outlined p-button-danger" />
+                </div>
+            </Dialog>
 
-        <Dialog :visible.sync="display_purchase_guide" >
-            <template #header>
-                <span class="mx-auto p-dialog-title">User's guide</span>
-            </template>
-            <UsersGuide />
-        </Dialog>
+            <Dialog :visible.sync="display_purchase_guide" >
+                <template #header>
+                    <span class="mx-auto p-dialog-title">User's guide</span>
+                </template>
+                <UsersGuide />
+            </Dialog>
 
-    </div>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -120,6 +122,7 @@ s
     display: flex
     justify-content: flex-end
     font-weight: bold
+    width: 100%
 
 .footer_link
     font-size: 0.9em

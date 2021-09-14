@@ -1,5 +1,5 @@
 <template>
-    <transition v-if="header_is_ready" name="fade">
+    <transition name="fade" appear>
 
         <div class="header">
             <div class="header_item_wrapper" v-for="(logo, i) in logos" :key="i">
@@ -73,6 +73,7 @@ export default {
     align-items: center
     padding: $r
     transition: transform .2s ease-in-out
+    user-select: none
 
 .header_item_wrapper:hover
     transform: scale(2)

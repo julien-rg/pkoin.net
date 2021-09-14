@@ -2,26 +2,31 @@
 <!-- Это страница истории покупок /payment-->
     <div class="paymant-wrapper">
 
-        <transition name="fade">
-                <div v-if="history_is_ready" class="content-wrapper">
+        <transition name="fade" appear>
+                <div class="transaction-history-wrapper">
 
-                    <h1 class="transactions-header">Transactions history</h1>
+                    <div v-if="history_is_ready" class="content-wrapper">
 
-                    <div v-if="!statuses" class="loading">
-                        Loading data... <i class="pi pi-spin pi-spinner" style="fontSize: 1rem; color: white"></i>
-                    </div>
+                        <h1 class="transactions-header py-3">Transactions history</h1>
 
-                    <div v-if="statuses && transaction_history_not_empty" class="cards-wrapper">
-                        <div v-if="true" @click="sortTransactions" class="sort-btn">
-                            <!-- <i class="pi pi-chevron-up sort"></i> -->
-                            <!-- <span class="sort-label">Show 'awaiting funds' first</span> -->
+                        <div v-if="!statuses" class="loading">
+                            Loading data... <i class="pi pi-spin pi-spinner" style="fontSize: 1rem; color: white"></i>
                         </div>
-                        <TableCell
-                            v-for="item in statuses"
-                            :key="item.id"
-                            :params="item" 
-                        />
+
+                        <div v-if="statuses && transaction_history_not_empty" class="cards-wrapper">
+                            <div v-if="true" @click="sortTransactions" class="sort-btn">
+                                <!-- <i class="pi pi-chevron-up sort"></i> -->
+                                <!-- <span class="sort-label">Show 'awaiting funds' first</span> -->
+                            </div>
+                            <TableCell
+                                v-for="item in statuses"
+                                :key="item.id"
+                                :params="item" 
+                            />
+                        </div>
+                    
                     </div>
+
                 </div>
         </transition>
         <PageFooter @historyDelete="handleDeleteEmit" class="footer" color="white" />
@@ -116,7 +121,7 @@ export default {
                 localStorage.setItem('transaction_history', JSON.stringify({}))
             }
 
-            return !(!!Object.keys(this.transaction_history))
+            return !(!!Object.keys(this.transaction_history || {}))
         }
     },
 
@@ -132,6 +137,8 @@ export default {
             const purchase_history = this.getTransactionHistory
 
             updated_statuses.forEach(item => {
+
+                if (!item) return;
 
                 const wallet = item.address
 
@@ -162,6 +169,8 @@ export default {
         },
 
         prepareRequestList(list) {
+            if (!list) return [];
+
             const arr = Object.values(list)
             const actual_transactions = arr.filter(item => item.status !== 'EXPIREDAWAITINGFUNDS' && item.status !== 'POCSENT')
 
@@ -238,9 +247,18 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.transaction-history-wrapper
+    width: 100%
+    height: 1px
+    flex-grow: 1
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    
 .content-wrapper
     width: 100%
-    max-height: 60%
+    height: 100%
     display: flex
     flex-direction: column
     justify-content: center
@@ -262,7 +280,8 @@ export default {
     color: white
 
 .cards-wrapper
-    width: 45%
+    width: 100%
+    padding: 0px 300px
     display: flex
     flex-direction: column
     overflow-y: auto
@@ -283,33 +302,25 @@ export default {
 .sort-label
     margin-left: .5em
 
-@media only screen and (max-width: 2240px)
-    .cards-wrapper
-        width: 50%
-
-@media only screen and (max-width: 2070px)
-    .cards-wrapper
-        width: 55%
-
 @media only screen and (max-width: 1732px)
     .cards-wrapper
-        width: 60%
+        padding: 0px 200px
 
 @media only screen and (max-width: 1588px)
     .cards-wrapper
-        width: 65%
+        padding: 0px 150px
 
 @media only screen and (max-width: 1465px)
     .cards-wrapper
-        width: 75%
+        padding: 0px 100px
 
 @media only screen and (max-width: 1270px)
     .cards-wrapper
-        width: 90%
+        padding: 0px 50px
 
 @media only screen and (max-width: 1080px)
     .cards-wrapper
-        width: 95%
+        padding: 0px 0px
 
 @media only screen and (max-width: 768px)
     .content-wrapper
